@@ -1,0 +1,158 @@
+//ASSIGNMENT3_LeeHuiZhen_TanHuiShan
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+const int MAX_UNIVERSITIES = 50; 
+
+// Task 1: Function to read input data
+void getInput(const string& fileName, string universities[], int intake[], int enrolment[], int output[], int& numUniversities) 
+{
+    ifstream inputFile("input.txt");
+
+    if (!inputFile) 
+	{
+        cout << "Error: Unable to open input file!" << endl;
+        exit(1);
+    }
+
+    numUniversities = 0;
+    while (inputFile >> universities[numUniversities] >> intake[numUniversities] >> enrolment[numUniversities] >> output[numUniversities]) 
+	{
+        numUniversities++;
+    }
+
+    inputFile.close();
+}
+
+// Task 2: Function to calculate total
+int calTotal(const int data[], int size) 
+{
+    int total = 0;
+    for (int i = 0; i < size; i++) 
+	{
+        total += data[i];
+    }
+    return total;
+}
+
+// Task 3: Function to find the index of the lowest value
+int getLowest(const int data[], int size) 
+{
+    int minIndex = 0;
+    for (int i = 1; i < size; i++) 
+	{
+        if (data[i] < data[minIndex]) 
+		{
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+// Task 4: Function to find the index of the highest value
+int getHighest(const int data[], int size) 
+{
+    int maxIndex = 0;
+    for (int i = 1; i < size; i++) 
+	{
+        if (data[i] > data[maxIndex]) 
+		{
+            maxIndex = i;
+        }
+    }
+    return maxIndex;
+}
+
+int calculateRange(const int data[], int size) 
+{
+    int maxVal = data[0], minVal = data[0];
+    for (int i = 1; i < size; i++) 
+	{
+        if (data[i] > maxVal) maxVal = data[i];
+        if (data[i] < minVal) minVal = data[i];
+    }
+    return maxVal - minVal;
+}
+
+// Task 5–7: Write output
+void writeOutput(const string& fileName, const string universities[], const int intake[], const int enrolment[], const int output[], int numUniversities) 
+{
+    ofstream outputFile("output.txt");
+
+    if (!outputFile) 
+	{
+        cerr << "Error: Unable to open output file!" << endl;
+        exit(1);
+    }
+
+    outputFile << "NUMBER OF STUDENTS' INTAKE, ENROLMENT AND OUTPUT\n";
+    outputFile << "IN PUBLIC UNIVERSITIES (2024)\n";
+    outputFile << "----------------------------------------------------------------------\n";
+    outputFile << setw(15) << left << "University" << setw(10) << "Intake" << setw(10) << "Enrolment" << "Output\n";
+    outputFile << "----------------------------------------------------------------------\n";
+
+    for (int i = 0; i < numUniversities; ++i) 
+	{
+        outputFile << setw(15) << left << universities[i]
+            << setw(10) << intake[i]
+            << setw(10) << enrolment[i]
+            << output[i] << '\n';
+    }
+
+    outputFile << "----------------------------------------------------------------------\n";
+
+    int totalIntake = calTotal(intake, numUniversities);
+    int totalEnrolment = calTotal(enrolment, numUniversities);
+    int totalOutput = calTotal(output, numUniversities);
+
+    double avgIntake = static_cast<double>(totalIntake) / numUniversities;
+    double avgEnrolment = static_cast<double>(totalEnrolment) / numUniversities;
+    double avgOutput = static_cast<double>(totalOutput) / numUniversities;
+
+    outputFile << setw(15) << "TOTAL" << setw(10) << totalIntake << setw(10) << totalEnrolment << totalOutput;
+    outputFile << setw(16) << "\nAVERAGE" << setw(10) << fixed << setprecision(2) << avgIntake << setw(10) << avgEnrolment << avgOutput<<endl;
+    outputFile << "----------------------------------------------------------------------\n";
+
+    int lowestIntake = getLowest(intake, numUniversities);
+    int highestIntake = getHighest(intake, numUniversities);
+
+    int lowestEnrolment = getLowest(enrolment, numUniversities);
+    int highestEnrolment = getHighest(enrolment, numUniversities);
+
+    int lowestOutput = getLowest(output, numUniversities);
+    int highestOutput = getHighest(output, numUniversities);
+
+    outputFile << "THE LOWEST NUMBER OF STUDENTS' INTAKE = " << intake[lowestIntake] << " (" << universities[lowestIntake] << ")\n";
+    outputFile << "THE HIGHEST NUMBER OF STUDENTS' INTAKE = " << intake[highestIntake] << " (" << universities[highestIntake] << ")\n";
+
+    outputFile << "\nTHE LOWEST NUMBER OF STUDENTS' ENROLMENT = " << enrolment[lowestEnrolment] << " (" << universities[lowestEnrolment] << ")\n";
+    outputFile << "THE HIGHEST NUMBER OF STUDENTS' ENROLMENT = " << enrolment[highestEnrolment] << " (" << universities[highestEnrolment] << ")\n";
+
+    outputFile << "\nTHE LOWEST NUMBER OF STUDENTS' OUTPUT = " << output[lowestOutput] << " (" << universities[lowestOutput] << ")\n";
+    outputFile << "THE HIGHEST NUMBER OF STUDENTS' OUTPUT = " << output[highestOutput] << " (" << universities[highestOutput] << ")\n";
+
+    outputFile << "\nRange of Intake: " << calculateRange(intake, numUniversities);
+    outputFile << "\nRange of Enrolment: " << calculateRange(enrolment, numUniversities);
+    outputFile << "\nRange of Output: " << calculateRange(output, numUniversities)<<endl;
+    outputFile << "----------------------------------------------------------------------\n";
+
+    outputFile.close();
+}
+
+int main() 
+{
+    string universities[MAX_UNIVERSITIES];
+    int intake[MAX_UNIVERSITIES], enrolment[MAX_UNIVERSITIES], output[MAX_UNIVERSITIES];
+    int numUniversities;
+
+    getInput("input.txt", universities, intake, enrolment, output, numUniversities);
+
+    writeOutput("output.txt", universities, intake, enrolment, output, numUniversities);
+
+    cout << "Report generated successfully in 'output.txt'.";
+    return 0;
+}
