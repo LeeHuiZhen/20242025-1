@@ -1,0 +1,152 @@
+//LeeHuiZhen_A24CS0259
+
+//LE3_Q1
+#include <iostream>
+using namespace std;
+bool isPassing (int);
+
+int main()
+{
+	int score;
+	cout<<"Enter the student's test score: ";
+	cin>>score;
+	if (isPassing(score))
+	    cout<<"The student passed the test."<<endl;
+	else
+	    cout<<"The student failed the test."<<endl;
+	
+	return 0;
+}
+
+bool isPassing (int score)
+{
+	return score >= 50;
+}
+
+//LE3_Q2
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	const int SIZE=5;
+	float price[SIZE];
+	float total=0, highest=0, average;
+	
+	cout<<"Enter the prices of 5 items: "<<endl;
+	for(int i=0;i<SIZE;i++)
+	{
+		cin>>price[i];
+		total+=price[i];
+		if(price[i]>highest)
+		{
+			highest=price[i];
+		}
+	}
+	
+	cout<<"Total price: RM"<<total<<endl;
+	cout<<"Average price: RM"<<total/SIZE<<endl;
+	cout<<"Highest price: RM"<<highest<<endl;
+	
+	return 0;
+}
+
+//LE3_Q3
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	const int NUM_STUDENTS=2;
+	const int NUM_MARKS=3;
+	int total[NUM_STUDENTS]={0};
+	double marks_table[NUM_STUDENTS][NUM_MARKS];
+	
+	cout<<"Enter marks for 2 students (3 subjects each): "<<endl;
+	for(int i=0;i<NUM_STUDENTS;i++)
+	{
+		cout<<"Student "<<i+1<<": "<<endl;
+		for(int j=0;j<NUM_MARKS;j++)
+		{
+			cin>>marks_table[i][j];
+			total[i]+=marks_table[i][j];
+		}
+	}
+	
+	cout<<"\nMarks Table: "<<endl;
+	cout<<"Student\tMath\tEnglish\tScience\tTotal"<<endl;
+    for(int i=0;i<NUM_STUDENTS;i++)
+    {
+        cout<<i+1<<"\t";
+        for(int j=0;j<NUM_MARKS;j++)
+        {
+            cout<<marks_table[i][j]<<"\t";
+        }
+        cout<<total[i]<<endl;
+    }
+	
+	return 0;
+}
+
+//LE3_Q4
+#include <iostream>
+using namespace std;
+int totalSales(double[],int);
+void findMaxRegion(double[],int,int &,double &);
+
+int main()
+{
+	const int PRODUCT=2;
+	const int REGION=3;
+	double sales[PRODUCT][REGION];
+	
+	cout<<"Enter sales data for 2 products across 3 regions: "<<endl;
+	for(int i=0;i<PRODUCT;i++)
+	{
+		cout<<"\nProduct "<<i+1<<": "<<endl;
+		for(int j=0;j<REGION;j++)
+		{
+			cout<<"Region "<<j+1<<": ";
+			cin>>sales[i][j];
+			
+		}
+	}
+	
+	for(int i=0;i<PRODUCT;i++)
+	{
+		int total=totalSales(sales[i],REGION);
+		int maxRegion;
+        double maxSales;
+		findMaxRegion(sales[i], REGION, maxRegion, maxSales);
+		
+		cout<<"\nProduct "<<i+1<<": "<<endl;
+	    cout<<"Total sales: RM"<<total<<endl;
+	    cout<<"Region with highest sales: Region "<<maxRegion+1<<" (Sales: RM"<<maxSales<<")"<<endl;
+	}
+	
+	return 0;
+}
+
+int totalSales(double sales[],int regions)
+{
+	int total=0;
+	for(int i=0;i<regions;i++) 
+	{
+        total+=sales[i];
+    }
+	return total;
+}
+
+void findMaxRegion(double sales[], int regions, int &maxRegion, double &maxSales)
+{
+	maxRegion=0;
+	maxSales=sales[0];
+	for(int i=1;i<regions;i++)
+	{
+		if(sales[i]>maxSales)
+		{
+			maxSales=sales[i];
+			maxRegion=i;
+		}
+	}
+}

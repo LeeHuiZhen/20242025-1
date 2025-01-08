@@ -1,0 +1,250 @@
+//LeeHuiZhen_A24CS0259
+
+//LE2_Q1
+#include <iostream>
+using namespace std;
+int main()
+{
+	int age;
+	
+	cout<<"Enter your age: ";
+	cin>>age;
+	
+	if (age<=12)
+		cout<<"Category: Child";
+	else if (age<=17)
+		cout<<"Category: Teenager";
+	else if (age<=64)
+		cout<<"Category: Adult";
+	else
+		cout<<"Category: Senior";
+	
+	return 0;
+}
+
+//LE2_Q2
+#include <iostream>
+using namespace std;
+int main()
+{
+	int num=1;
+	
+	cout<<"Enter a day number from 1 to 7: ";
+	cin>>num;
+	
+	switch (num)
+	{
+		case 1 : cout<<"Sunday";
+		   break;
+		case 2 : cout<<"Monday";
+		   break;
+		case 3 : cout<<"Tuesday";
+		   break;
+		case 4 : cout<<"Wednesday";
+		   break;
+		case 5 : cout<<"Thursday";
+		   break;
+		case 6 : cout<<"Friday";
+		   break;  
+		case 7 : cout<<"Saturday";
+		   break;  
+		default : cout<<"Invalid input";
+		   break;
+	}
+	
+	return 0;
+}
+
+//LE2_Q3
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+	string type;
+	float amount,discount,price; 
+	
+	cout<<"Enter customer type (Gold or Regular): ";
+	cin>>type;
+	cout<<"Enter total purchase amount: ";
+	cin>>amount;
+	
+	if (type=="Gold")
+	{
+		if (amount<200)
+		{
+		   discount=0.10;
+		   cout<<"Discount: 10%";
+		}
+		else if (amount<500)
+		{
+	       discount=0.25;
+		   cout<<"Discount: 25%";
+		}
+		else if (amount<1000)
+		{
+		   discount=0.40;
+		   cout<<"Discount: 40%";  
+        }
+		else if (amount>=1000)
+		{
+		   discount=0.50;
+		   cout<<"Discount: 50%";  
+	    }
+		else
+		{
+		   cout<<"Invalid purchase amount";
+	    }
+	}
+	
+	else if (type=="Regular")
+	{
+		if (amount<200)
+		{
+		   discount=0.05;
+		   cout<<"Discount: 5%";
+	    }
+		else if (amount<500)
+		{
+		   discount=0.15;
+		   cout<<"Discount: 15%";
+	    }
+		else if (amount<1000)
+		{  
+		discount=0.30;
+		   cout<<"Discount: 30%"; 
+	    }
+		else if (amount>=1000)
+		{
+		   discount=0.40;
+		   cout<<"Discount: 40%";  
+	    }
+		else
+		{
+		   cout<<"Invalid purchase amount";
+	    }
+	}
+	
+	else
+	{
+		cout<<"Invalid customer type";
+	}
+	
+	price=amount*(1-discount);
+	cout<<"\n"<<"Final Price after discount: RM"<<price;
+	
+	return 0;
+}
+
+//LE2_Q4
+#include <iostream>
+using namespace std;
+int main()
+{
+	int a=1, n;
+	
+	cout<<"Enter an integer: ";
+	cin>>n;
+	
+	while (a<=n)
+	{
+		cout<<a<<" ";
+		a=a+1;
+	}
+	
+	return 0;
+}
+
+//LE2_Q5
+#include <iostream>
+using namespace std;
+int main()
+{
+	int password;
+	
+	cout<<"Enter a password: ";
+	cin>>password;
+	
+	while (password!=1234)
+	{
+		cout<<"Password incorrect. Please enter a new password: ";
+		cin>>password;
+	}
+	
+	cout<<"Access granted. ";
+	
+	return 0;
+}
+
+//LE2_Q6
+#include <iostream>
+using namespace std;
+int main()
+{
+	char choice;
+	
+	do
+	{
+		cout<<"Do you want to continue? (enter 'y' to continue or 'n' to stop). ";
+	    cin>>choice;
+	} while (choice!='n');
+	
+	cout<<"Stop.";
+	
+	return 0;
+}
+
+//LE2_Q7
+#include <iostream>
+using namespace std;
+int main()
+{
+	int points, redeem;
+	char  choice;
+	
+	cout<<"Enter your current loyalty points: ";
+	cin>>points;
+	
+	do
+	{
+		if (points>=1000)
+		{
+			redeem=1000;
+	        cout<<"Discount: 15%"<<endl;
+		}
+		else if (points>=500)
+	    {
+	    	redeem=500;
+		    cout<<"Discount: 10%"<<endl;
+	    }
+		else if (points>=100)
+	    {
+	    	redeem=100;
+		    cout<<"Discount: 5%"<<endl;
+	    }   
+	    else
+	    {
+	    	cout<<"Insufficient points to redeem. You need at least 100 points."<<endl;
+	    	break;
+		}
+	
+	    points-=redeem;
+	    cout<<"Remaining points: "<<points<<endl;
+	    
+	    if (points>=100)
+	    {
+	    	cout<<"Do you want to redeem more points? (y/n): ";
+		    cin>>choice;
+		}
+		else
+		{
+			cout<<"Insufficient points to continue redeeming."<<endl;
+			break;
+		}
+	    	
+	} while (choice=='y');
+	
+	cout<<"Thank you for using the loyalty points redemption program! ";
+	
+	return 0;
+}
