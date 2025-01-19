@@ -1,0 +1,135 @@
+//Declare directive, library, etc. - 1.5 marks
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+
+#define NUMOFBRAND 10
+#define NUMOFYEAR 4
+
+using namespace std;
+
+//Task 1: 4 marks
+struct Sales
+{
+	string brand;
+	double percentage[NUMOFYEAR];
+    double average;
+};
+
+//Task 2: 7.5 marks
+void calculateAverage(Sales S[])
+{
+	for (int i = 0; i < NUMOFBRAND ; i++) 
+	{
+        double sum = 0.0;
+        for (int j = 0; j < NUMOFYEAR; j++) 
+		{
+            sum += S[i].percentage[j];
+        }
+        S[i].average = sum / NUMOFYEAR;
+    }
+}
+
+//Task 3: 9 marks
+int findLowest(Sales S[]) 
+{
+    double lowestPercentage = S[0].average;
+	int lowestBrand = 0;
+
+	for (int i = 0;i < NUMOFBRAND;i++)
+		if (S[i].average < lowestPercentage)
+		{
+			lowestPercentage = S[i].average;
+			lowestBrand = i;
+		}
+	return lowestBrand;
+}
+
+//Task 4: 9 marks
+int findHighest(Sales S[]) 
+{
+    double highestPercentage = S[0].average;
+	int highestBrand = 0;
+
+	for (int i = 0;i < NUMOFBRAND;i++)
+		if (S[i].average >highestPercentage)
+		{
+			highestPercentage = S[i].average;
+			highestBrand = i;
+		}
+	return highestBrand;
+
+}
+
+void displayLine() 
+{
+	for (int i = 0; i < 60; i++) 
+	{
+		cout << "-";
+	}
+	cout<<endl;
+}
+
+//Task 5: 19 marks
+void displayOutput(Sales S[])
+{
+	cout << "Percentage of Sales by Brand (2016 to 2019)" <<endl;
+	displayLine();
+    cout << "BRAND" << setw(14) << " 2016" << setw(8) << " 2017" << setw(8) << " 2018" << setw(8) << " 2019" << setw(11) << " AVERAGE" << endl;
+    displayLine();
+
+    for (int i = 0; i < NUMOFBRAND; i++) 
+    {
+        cout << left << setw(15) << S[i].brand;
+        for (int j = 0; j < NUMOFYEAR; j++) 
+        {
+            cout << fixed << setprecision(1) << left << setw(8) << S[i].percentage[j];
+        }
+        cout << fixed << setprecision(2) << left << setw(10) << S[i].average << endl;
+    }
+
+    displayLine();
+
+    int low = findLowest(S);
+	int high = findHighest(S);
+	
+	cout << "Lowest Average of Sales Percentage: " << setprecision(2) << S[low].average << " - " << S[low].brand << endl;
+	cout << "Highest Average of Sales Percentage: " << setprecision(2) << S[high].average << " - " << S[high].brand << endl;
+
+
+    displayLine();
+}
+
+//Task 6: 16.5 marks
+int main() 
+{
+	Sales Car[NUMOFBRAND];
+    ifstream inFile("2. InputQ2.txt");
+    
+    if (!inFile) 
+	{
+        cout << "Error: Unable to open file '2.InputQ2.txt'." << endl;
+        return 0;
+    }
+
+    for (int i = 0; i < NUMOFBRAND; i++) 
+	{
+        for (int j = 0; j < NUMOFYEAR; j++) 
+		{
+            inFile >> Car[i].percentage[j];
+        }
+        getline(inFile, Car[i].brand);
+    }
+    inFile.close();
+
+    calculateAverage(Car);
+    displayOutput(Car);
+	
+	return 0;
+}
+
+//Name: LEE HUI ZHEN
+//Matric No: A24CS0259
+//Section: 01
+//Lecturer's Name: DR.IZYAN
